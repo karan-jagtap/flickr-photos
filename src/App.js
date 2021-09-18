@@ -72,9 +72,15 @@ class App extends React.Component {
       this.setState({ recordsPerPage: e.target.value, pageNumber: 1 }, () => {
         if (this.state.searchText === "" && this.state.tags === "") {
           this.fetchData();
-        } else if (this.state.searchText !== "" && this.state.tags === "") {
+        } else if (
+          this.state.searchText !== "" &&
+          (this.state.tags === "" || this.state.tags === "clear")
+        ) {
           this.fetchData("search", "text");
-        } else if (this.state.searchText === "" && this.state.tags !== "") {
+        } else if (
+          this.state.searchText === "" &&
+          (this.state.tags !== "" || this.state.tags !== "clear")
+        ) {
           this.fetchData("search", "tags");
         }
       });
@@ -89,17 +95,17 @@ class App extends React.Component {
       this.setState(
         (prev) => ({ pageNumber: prev.pageNumber + from }),
         () => {
-          console.log(
-            "sach = ",
-            this.state.searchText,
-            "tahs = ",
-            this.state.tags
-          );
           if (this.state.searchText === "" && this.state.tags === "") {
             this.fetchData();
-          } else if (this.state.searchText !== "" && this.state.tags === "") {
+          } else if (
+            this.state.searchText !== "" &&
+            (this.state.tags === "" || this.state.tags === "clear")
+          ) {
             this.fetchData("search", "text");
-          } else if (this.state.searchText === "" && this.state.tags !== "") {
+          } else if (
+            this.state.searchText === "" &&
+            (this.state.tags !== "" || this.state.tags !== "clear")
+          ) {
             this.fetchData("search", "tags");
           }
         }
@@ -110,20 +116,25 @@ class App extends React.Component {
   onSearchClick = (e) => {
     e.preventDefault();
     if (this.state.searchText !== "") {
-      this.setState({ pageNumber: 1 }, () => this.fetchData("search", "text"));
+      this.setState({ pageNumber: 1, tags: "clear" }, () =>
+        this.fetchData("search", "text")
+      );
     }
   };
 
   selectTag = (e) => {
     e.preventDefault();
     const { id } = e.target;
-    this.setState({ tags: id === "clear" ? "" : id, pageNumber: 1 }, () => {
-      if (this.state.tags !== "") {
-        this.fetchData("filter", "tags");
-      } else {
-        this.fetchData();
+    this.setState(
+      { tags: id === "clear" ? "" : id, pageNumber: 1, searchText: "" },
+      () => {
+        if (this.state.tags !== "") {
+          this.fetchData("filter", "tags");
+        } else {
+          this.fetchData();
+        }
       }
-    });
+    );
   };
 
   onDownloadImage = (url, id) => {
@@ -138,6 +149,7 @@ class App extends React.Component {
         {/* Start - Search Container */}
         <div className="search-container">
           <input
+            value={this.state.searchText}
             type="text"
             class="form-control"
             placeholder="Search"
@@ -173,7 +185,7 @@ class App extends React.Component {
             <div className="thumbnail" key={item.id}>
               <img alt="" className="img-thumbnail" src={item.url_s} />
               <button
-                className="btn btn-secondary"
+                className="btn btn-dark"
                 onClick={() => this.onDownloadImage(item.url_s, item.id)}
               >
                 Download
