@@ -1,5 +1,5 @@
 .search-container {
-  width: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
 }
 
 .form-control {
-  width: auto;
+  max-width: fit-content;
   margin-right: 15px;
 }
 
@@ -83,12 +83,25 @@
 .thumbnail {
   display: flex;
   flex-direction: column;
+  height: auto;
+  width: 215px;
+  padding: 0px;
+  justify-self: center;
 }
 
 .btn-secondary {
   width: 100%;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+}
+
+.img-thumbnail {
+  height: 160px;
+  width: 215px;
+  border: none;
+  padding: 0px;
+  border-radius: 0px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1023px) {

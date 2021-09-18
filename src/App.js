@@ -171,7 +171,7 @@ class App extends React.Component {
         <div className="image-container">
           {this.state.displayData.map((item) => (
             <div className="thumbnail" key={item.id}>
-              <img alt="" src={item.url_s} style={{ justifySelf: "center" }} />
+              <img alt="" className="img-thumbnail" src={item.url_s} />
               <button
                 className="btn btn-secondary"
                 onClick={() => this.onDownloadImage(item.url_s, item.id)}
