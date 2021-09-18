@@ -161,6 +161,7 @@ class App extends React.Component {
               {item}
             </button>
           ))}
+
           <button className="clear-button" id="clear" onClick={this.selectTag}>
             Clear tags
           </button>
